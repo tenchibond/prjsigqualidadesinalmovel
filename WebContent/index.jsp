@@ -44,7 +44,7 @@
 	        <div class="form-group">
 	          <input type="text" class="form-control" placeholder="Buscar Localização">
 	        </div>
-	        <button type="submit" class="btn btn-default">Buscar</button>
+	        <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span> Buscar</button>
 	      </form>
 	      <ul class="nav navbar-nav navbar-right">
 	        <li><a class="nav-link" href="sobre.jsp">Sobre</a></li>
