@@ -4,7 +4,7 @@
 
 %>
 
-<form method="post" action=# enctype="multipart/form-data">
+<form method="post" action="UploadServlet" enctype="multipart/form-data">
 	<fieldset>
 		<label for="txArquivos">Arquivo:</label>
 		<input type="file" name="arquivo" id="txArquivo" />
