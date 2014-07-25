@@ -89,5 +89,40 @@ public class DaoERB {
 		return lstERBS;
 		
 	}
+	
+	public ArrayList<ERB> listarERBSPorOperadora(String operadora) {
+		ArrayList<ERB> lstERBS = new ArrayList<>();
+		String sql_listar = "select *from erbs where operadora = ?";
+		Connection conn = ConnectionSingleton.getInstancy().getConexao();
+		try {
+			PreparedStatement pstm = conn.prepareStatement(sql_listar);
+			pstm.setString(1, operadora.toUpperCase());
+			ResultSet res = pstm.executeQuery();
+			while(res.next()) {
+				ERB erb = new ERB();
+				erb.setId(res.getInt("id"));
+				erb.setOperadora(res.getString("operadora"));
+				erb.setEstacao(res.getInt("estacao"));
+				erb.setNome(res.getString("nome"));
+				erb.setUf(res.getString("uf"));
+				erb.setMunicipio(res.getString("municipio"));
+				erb.setBairro(res.getString("bairro"));
+				erb.setLogradouro(res.getString("logradouro"));
+				erb.setLatitude(res.getFloat("latitude"));
+				erb.setLongitude(res.getFloat("longitude"));
+//				erb.setDataCadastro(new Date(System.currentTimeMillis()));
+//				erb.setDataPrimeiroLicenciamento(new Date(System.currentTimeMillis()));
+//				erb.setDataUltimoLicenciamento(new Date(System.currentTimeMillis()));
+				lstERBS.add(erb);
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return lstERBS;
+		
+	}
 
 }
