@@ -8,7 +8,7 @@ public class ConnectionSingleton {
     private Connection conexao;
     private final String url = "jdbc:mysql://localhost/qualidadesinalmovel";
     private final String user = "root";
-    private final String password = "root";
+    private final String password = "";
     private static ConnectionSingleton instancy;
     
     private ConnectionSingleton() {
