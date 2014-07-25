@@ -58,7 +58,7 @@ public class DaoERB {
 	
 	public ArrayList<ERB> listarERBS() {
 		ArrayList<ERB> lstERBS = new ArrayList<>();
-		String sql_listar = "select *from erbs";
+		String sql_listar = "select * from erbs";
 		Connection conn = ConnectionSingleton.getInstancy().getConexao();
 		try {
 			Statement stm = conn.createStatement();
