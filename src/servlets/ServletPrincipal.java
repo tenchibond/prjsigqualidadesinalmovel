@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.sun.xml.ws.runtime.dev.Session;
 
+import daos.DaoDadosQualidade;
 import daos.DaoERB;
+import entidades.DadosQualidade;
 import entidades.ERB;
 
 /**
@@ -57,26 +59,88 @@ public class ServletPrincipal extends HttpServlet {
 	
 	private void gerenciaAcoes(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		
-		String operadora = (String) request.getParameter("operadora");
-		DaoERB daoERB = new DaoERB();
-		ArrayList<ERB> lstERBS;
+		String acao = request.getParameter("acao");
 		
-		if(operadora.equals("todos")) {
-			lstERBS = daoERB.listarERBS();
+		if(acao != null) {
+			if(acao.equalsIgnoreCase("erb")) {
+				String operadora = (String) request.getParameter("operadora");
+				DaoERB daoERB = new DaoERB();
+				ArrayList<ERB> lstERBS;
+				
+				if(operadora.equals("todas")) {
+					lstERBS = daoERB.listarERBS();
+					
+				} else {
+					if(operadora.equals("vivo"))
+						operadora = "telefonica";
+					if(operadora.equals("oi"))
+						operadora = "tnl";
+					
+					lstERBS = daoERB.listarERBSPorOperadora(operadora);
+					
+				}
+				
+				request.getSession().setAttribute("lstERBS", lstERBS);
+				
+				response.sendRedirect("index.jsp");
+				
+			}
+			if(acao.equalsIgnoreCase("registradadosqualidade")) {
+				
+				DaoDadosQualidade daoDadosQualidade = new DaoDadosQualidade();
+				DadosQualidade dadosQualidade = new DadosQualidade();
+				
+				dadosQualidade.setOperadora(request.getParameter("operadoraModal"));
+				dadosQualidade.setLatitude(Float.parseFloat(request.getParameter("latitudeModal")));
+				dadosQualidade.setLongitude(Float.parseFloat(request.getParameter("longitudeModal")));
+				dadosQualidade.setIntensidadeSinal(Integer.parseInt(request.getParameter("intensidadeModal")));
+				if(request.getParameter("ruidoNaLigacao") != null)
+					dadosQualidade.setLigacaoComRuido(true);
+				if(request.getParameter("ligacaoNaoCompleta") != null)
+					dadosQualidade.setLigacaoNaoCompleta(true);
+				if(request.getParameter("ligacaoInterrompida") != null)
+					dadosQualidade.setLigacaoInterrompida(true);
+				if(request.getParameter("semDadosMoveis") != null)
+					dadosQualidade.setSemDadosMoveis(true);
+				
+				String resultado = daoDadosQualidade.create(dadosQualidade);
+				String alerta = "<div class='alert alert-info' role='alert'>" + resultado + "</div>";
+				
+				request.getSession().setAttribute("alerta", alerta);
+				response.sendRedirect("index.jsp");
+				
+//				response.getWriter().println(request.getParameter("longitudeModal"));
+//				response.getWriter().println(request.getParameter("latitudeModal"));
+//				response.getWriter().println(request.getParameter("operadoraModal"));
+//				response.getWriter().println(request.getParameter("intensidadeModal"));
+//				response.getWriter().println(request.getParameter("ruidoNaLigacao"));
+//				response.getWriter().println(request.getParameter("ligacaoNaoCompleta"));
+//				response.getWriter().println(request.getParameter("ligacaoInterrompida"));
+//				response.getWriter().println(request.getParameter("semDadosMoveis"));
+				
+				
+			}
 			
-		} else {
-			if(operadora.equals("vivo"))
-				operadora = "telefonica";
-			if(operadora.equals("oi"))
-				operadora = "tnl";
-			
-			lstERBS = daoERB.listarERBSPorOperadora(operadora);
+			if(acao.equalsIgnoreCase("dadosqualidade")) {
+				String operadora = (String) request.getParameter("operadora");
+				DaoDadosQualidade daoDadosQualidade = new DaoDadosQualidade();
+				ArrayList<DadosQualidade> lstDadosQualidade;
+				
+				if(operadora.equalsIgnoreCase("todas")) {
+					lstDadosQualidade = daoDadosQualidade.listarDados();
+					
+				} else {
+					lstDadosQualidade = daoDadosQualidade.listarDadosPorOperadora(operadora);
+					
+				}
+				
+				request.getSession().setAttribute("lstDadosQualidade", lstDadosQualidade);				
+				response.sendRedirect("index.jsp");
+
+				
+			}
 			
 		}
-		
-		request.getSession().setAttribute("lstERBS", lstERBS);
-		
-		response.sendRedirect("index.jsp");
 		
 	}
 
