@@ -1,5 +1,8 @@
 package entidades;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class DadosQualidade {
 	private int id;
 	private float latitude;

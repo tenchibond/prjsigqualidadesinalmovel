@@ -3,8 +3,8 @@
 -- http://www.phpmyadmin.net
 --
 -- Máquina: localhost
--- Data de Criação: 14-Jul-2014 às 11:23
--- Versão do servidor: 5.5.37-0ubuntu0.14.04.1
+-- Data de Criação: 09-Ago-2014 às 12:38
+-- Versão do servidor: 5.5.38-0ubuntu0.14.04.1
 -- versão do PHP: 5.5.9-1ubuntu4.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -34,11 +34,13 @@ CREATE TABLE IF NOT EXISTS `dados_qualidade` (
   `longitude` float NOT NULL,
   `latitude` float NOT NULL,
   `operadora` varchar(8) NOT NULL,
-  `qualidade_sinal` int(11) NOT NULL,
-  `sinal_intermitente` tinyint(1) NOT NULL,
-  `chamadas_incompletas` tinyint(1) NOT NULL,
+  `intensidade_sinal` int(11) NOT NULL,
+  `ligacao_interrompida` tinyint(1) NOT NULL,
+  `ligacao_nao_completa` tinyint(1) NOT NULL,
+  `ruido_ligacao` tinyint(1) NOT NULL,
+  `sem_dados` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
 -- --------------------------------------------------------
 
