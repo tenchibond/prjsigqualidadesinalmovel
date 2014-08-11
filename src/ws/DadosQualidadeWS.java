@@ -10,6 +10,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import com.google.gson.Gson;
+
 import daos.DaoDadosQualidade;
 import entidades.DadosQualidade;
 
@@ -26,11 +28,29 @@ public class DadosQualidadeWS {
 	}
 	
 	@GET
+	@Path("/listarDadosGSON")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String listarDadosGSON() {
+		DaoDadosQualidade daoDadosQualidade = new DaoDadosQualidade();
+		return new Gson().toJson(daoDadosQualidade.listarDados());
+		
+	}
+	
+	@GET
 	@Path("/listarDadosPorOperadora/{operadora}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public ArrayList<DadosQualidade> listarDadosPorOperadora(@PathParam("operadora") String operadora) {
 		DaoDadosQualidade daoDadosQualidade = new DaoDadosQualidade();
 		return daoDadosQualidade.listarDadosPorOperadora(operadora);
+		
+	}
+	
+	@GET
+	@Path("/listarDadosPorOperadoraGSON/{operadora}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String listarDadosPorOperadoraGSON(@PathParam("operadora") String operadora) {
+		DaoDadosQualidade daoDadosQualidade = new DaoDadosQualidade();
+		return new Gson().toJson(daoDadosQualidade.listarDadosPorOperadora(operadora));
 		
 	}
 	
